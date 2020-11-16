@@ -37,20 +37,20 @@ public class Client implements ActionListener, Runnable {
     public void serverConnection() {
 
     	try {
-  	        	
-			String IP = "127.0.0.1";
-			sk = new Socket(IP, 1234);
-			
-			this.name = JOptionPane.showInputDialog(this.gui.frame, "Enter username:", JOptionPane.INFORMATION_MESSAGE);
-			
-			//read
-			br = new BufferedReader(new InputStreamReader(sk.getInputStream()));
-			
-			//writing
-			pw = new PrintWriter(sk.getOutputStream(), true);
-			pw.println(this.name); // Send to server side
-			
-			new Thread(this).start();
+
+		String IP = "127.0.0.1";
+		sk = new Socket(IP, 1234);
+
+		this.name = JOptionPane.showInputDialog(this.gui.frame, "Enter username:", JOptionPane.INFORMATION_MESSAGE);
+
+		//read
+		br = new BufferedReader(new InputStreamReader(sk.getInputStream()));
+
+		//writing
+		pw = new PrintWriter(sk.getOutputStream(), true);
+		pw.println(this.name); // Send to server side
+
+		new Thread(this).start();
 
         } catch (Exception e) {
             System.out.println(e + " Socket Connection error");
