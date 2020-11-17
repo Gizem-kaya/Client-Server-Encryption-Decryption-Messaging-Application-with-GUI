@@ -40,18 +40,33 @@ public class Server {
                 logFile.delete();
                 logFile.createNewFile();
               }
-            
-       	 	
+
        	 	
         	addr = InetAddress.getByName("127.0.0.1");
         	            
             server = new ServerSocket(1234,50,addr);
             // key and initialization vector creation
             Crypto crypto = Crypto.getInstance();
-            // DES key and initialization vector declaration
-            System.out.printf("\n************** DES  **************\nKEY    %s\nIV  %s\n", crypto.get_DES_key(), crypto.get_DES_IV());
-            // AES key and initialization vector declaration
-            System.out.printf("\n************** AES  **************\nKEY    %s\nIV  %s\n", crypto.get_AES_key(), crypto.get_AES_IV());
+
+            /**
+             * 
+             * Key and iv declarations to the log file
+             * 
+             */
+            String desInfo = "************** DES  **************\nKEY    " + crypto.get_DES_key()+ "\nIV  " + crypto.get_DES_IV() + "\n";
+            String aesInfo = "\n************** AES  **************\nKEY    " + crypto.get_AES_key()+ "\nIV  " + crypto.get_AES_IV() + "\n";
+            try {     
+                BufferedWriter bw = new BufferedWriter(new FileWriter("log.txt",true));
+                bw.write(desInfo + aesInfo + "\n");
+                bw.close();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+
+            // DES key and initialization vector declaration to console
+            System.out.printf(desInfo);
+            // AES key and initialization vector declaration to console
+            System.out.printf(aesInfo);
 
             System.out.println("\n Waiting for Client connection");   
             while(true) {
