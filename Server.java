@@ -18,17 +18,21 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.crypto.NoSuchPaddingException;
+
 public class Server {
-	
+
     ServerSocket server;
     Socket sk;
     InetAddress addr;
-    
+
     ArrayList<ServerThread> list = new ArrayList<ServerThread>();
 
-    public Server() {
+    public Server() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
         try {
         	
        	 	File logFile = new File("log.txt");			// Create a log file
@@ -41,7 +45,14 @@ public class Server {
        	 	
         	addr = InetAddress.getByName("127.0.0.1");
         	            
-        	server = new ServerSocket(1234,50,addr);
+            server = new ServerSocket(1234,50,addr);
+            // key and initialization vector creation
+            Crypto crypto = Crypto.getInstance();
+            // DES key and initialization vector declaration
+            System.out.printf("\n************** DES  **************\nKEY    %s\nIV  %s\n", crypto.get_DES_key(), crypto.get_DES_IV());
+            // AES key and initialization vector declaration
+            System.out.printf("\n************** AES  **************\nKEY    %s\nIV  %s\n", crypto.get_AES_key(), crypto.get_AES_IV());
+
             System.out.println("\n Waiting for Client connection");   
             while(true) {
                 sk = server.accept();
@@ -71,7 +82,8 @@ public class Server {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+            throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException {
         new Server();
     }
 }
