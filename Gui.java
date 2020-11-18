@@ -163,15 +163,15 @@ public class Gui {
 						Crypto crypto = Crypto.getInstance();
 						if (methodAes.isSelected()) {
 							if (modeCBC.isSelected())
-								encryptedData = client.name + "> " + crypto.encrypt(text.getText(), false, true); // DO ENCRYPTION
+								encryptedData = crypto.encrypt(client.name + "> " + text.getText(), false, true); // DO ENCRYPTION
 							else
-								encryptedData = client.name + "> " + crypto.encrypt(text.getText(), false, false); // DO ENCRYPTION
+								encryptedData = crypto.encrypt(client.name + "> " + text.getText(), false, false); // DO ENCRYPTION
 
 						} else {
 							if (modeCBC.isSelected())
-								encryptedData = client.name + "> " + crypto.encrypt(text.getText(), true, true); // DO ENCRYPTION
+								encryptedData = crypto.encrypt(client.name + "> " + text.getText(), true, true); // DO ENCRYPTION
 							else
-								encryptedData = client.name + "> " + crypto.encrypt(text.getText(), true, false); // DO ENCRYPTION
+								encryptedData = crypto.encrypt(client.name + "> " + text.getText(), true, false); // DO ENCRYPTION
 
 						}
 					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
